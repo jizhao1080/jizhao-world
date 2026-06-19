@@ -111,21 +111,21 @@ contract JizhaoPoints {
     /**
      * @dev 为指定地址铸造积分（基于禅修时长）
      * @param recipient 接收积分的地址
-     * @param minutes 禅修时长（分钟）
+     * @param _minutes 禅修时长（分钟）
      */
-    function mintByMinutes(address recipient, uint256 minutes) external onlyMinter whenNotPaused {
+    function mintByMinutes(address recipient, uint256 _minutes) external onlyMinter whenNotPaused {
         require(recipient != address(0), "JZP: Cannot transfer to zero address");
-        require(minutes > 0, "JZP: Minutes must be greater than 0");
+        require(_minutes > 0, "JZP: Minutes must be greater than 0");
         
         // 计算今日已获得的积分
         uint256 today = _getCurrentDay();
         uint256 alreadyMinted = dailyMinted[recipient][today];
         
         // 检查是否超过每日上限
-        require(alreadyMinted + minutes <= DAILY_LIMIT, "JZP: Exceeds daily limit of 100 points");
+        require(alreadyMinted + _minutes <= DAILY_LIMIT, "JZP: Exceeds daily limit of 100 points");
         
         // 铸造积分
-        uint256 amount = minutes; // 1分钟 = 1积分
+        uint256 amount = _minutes; // 1分钟 = 1积分
         balanceOf[recipient] += amount;
         totalSupply += amount;
         dailyMinted[recipient][today] += amount;
