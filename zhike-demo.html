@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<title>南山寺 · AI知客僧</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f2ebe1;--text-primary:#4a4238;--text-secondary:#8a7e72;--text-tertiary:#bcb2a6;--wood:#8B7D6B;--wood-hover:#9C8E7C;--wood-active:#7A6C5A;--divider:#ddd5cb;--card-bg:#f7f2ea;--chat-user:#e8dfd4;--max-w:520px}
+body{background:var(--bg);color:var(--text-primary);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans SC","PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;min-height:100dvh;display:flex;flex-direction:column;align-items:center;padding:40px 20px;-webkit-tap-highlight-color:transparent}
+.container{width:100%;max-width:var(--max-w);display:flex;flex-direction:column;align-items:center;min-height:calc(100dvh - 80px)}
+.header{text-align:center;margin-bottom:28px;opacity:0;animation:fadeIn 1s ease forwards}
+.title{font-family:KaiTi,STKaiti,"楷体",serif;font-size:30px;font-weight:400;letter-spacing:8px;color:var(--text-primary);line-height:1.3}
+.title-sub{font-size:13px;color:var(--text-tertiary);letter-spacing:4px;margin-top:4px}
+.chat-area{width:100%;flex:1;overflow-y:auto;padding:4px 0 16px;display:flex;flex-direction:column;gap:16px;opacity:0;animation:fadeIn 0.8s ease 0.3s forwards}
+.chat-area::-webkit-scrollbar{width:3px}
+.chat-area::-webkit-scrollbar-thumb{background:var(--text-tertiary);border-radius:2px}
+.msg{display:flex;gap:12px;max-width:90%;opacity:0;animation:msgIn 0.5s ease forwards}
+.msg.user{flex-direction:row-reverse;align-self:flex-end}
+.msg.bot{align-self:flex-start}
+.msg-avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px}
+.msg.user .msg-avatar{background:var(--divider);color:var(--text-secondary)}
+.msg.bot .msg-avatar{background:var(--wood);color:#fff;font-family:KaiTi,STKaiti,"楷体",serif;font-size:14px;letter-spacing:1px}
+.msg-bubble{padding:12px 16px;border-radius:14px;font-size:14px;line-height:1.8;letter-spacing:0.5px}
+.msg.user .msg-bubble{background:var(--chat-user);color:var(--text-primary);border-bottom-right-radius:4px}
+.msg.bot .msg-bubble{background:var(--card-bg);color:var(--text-secondary);border:1px solid var(--divider);border-bottom-left-radius:4px}
+.msg.bot .msg-bubble strong{color:var(--text-primary);font-weight:500}
+.suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;margin-bottom:8px;align-self:flex-start;opacity:0;animation:fadeIn 0.6s ease 0.8s forwards}
+.suggestions button{background:var(--card-bg);border:1px solid var(--divider);border-radius:20px;padding:8px 18px;font-size:13px;color:var(--text-secondary);cursor:pointer;font-family:inherit;transition:all 0.25s ease;-webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation}
+.suggestions button:hover{background:var(--divider);color:var(--text-primary);border-color:var(--wood)}
+.suggestions button:active{transform:scale(0.96)}
+.input-area{width:100%;display:flex;gap:10px;padding:16px 0 0;border-top:1px solid var(--divider);opacity:0;animation:fadeIn 0.6s ease 1s forwards}
+.input-area input{flex:1;background:var(--card-bg);border:1px solid var(--divider);border-radius:24px;padding:12px 20px;font-size:15px;color:var(--text-primary);font-family:inherit;outline:none;transition:border-color 0.25s ease,box-shadow 0.25s ease}
+.input-area input:focus{border-color:var(--wood);box-shadow:0 0 0 3px rgba(139,125,107,0.10)}
+.input-area input::placeholder{color:var(--text-tertiary)}
+.input-area button{background:var(--wood);color:#fff;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.3s ease,transform 0.15s ease;flex-shrink:0;-webkit-tap-highlight-color:transparent;outline:none}
+.input-area button:hover{background:var(--wood-hover)}
+.input-area button:active{transform:scale(0.92)}
+.input-area button svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.enter-chanting-btn{display:inline-block;background:var(--wood);color:#fff;border:none;border-radius:30px;padding:12px 36px;font-size:15px;font-family:KaiTi,STKaiti,'楷体',serif;letter-spacing:4px;cursor:pointer;text-decoration:none;transition:background 0.3s ease,transform 0.15s ease,box-shadow 0.3s ease;box-shadow:0 4px 14px rgba(139,125,107,0.2);margin-top:20px;opacity:0;animation:fadeIn 0.6s ease 1.2s forwards}.enter-chanting-btn:hover{background:var(--wood-hover)}.enter-chanting-btn:active{transform:scale(0.96)}.footer-note{margin-top:20px;font-size:11px;color:var(--text-tertiary);text-align:center;letter-spacing:2px;opacity:0;animation:fadeIn 0.6s ease 1.2s forwards}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.msg:nth-child(1){animation-delay:0.4s}
+.msg:nth-child(2){animation-delay:0.6s}
+.msg:nth-child(3){animation-delay:0.8s}
+.msg:nth-child(4){animation-delay:1.0s}
+.msg:nth-child(5){animation-delay:1.2s}
+.msg:nth-child(6){animation-delay:1.4s}
+.typing-indicator{display:inline-flex;gap:4px;align-items:center;padding:4px 0}
+.typing-indicator span{width:6px;height:6px;border-radius:50%;background:var(--text-tertiary);animation:typing 1.2s infinite}
+.typing-indicator span:nth-child(2){animation-delay:0.2s}
+.typing-indicator span:nth-child(3){animation-delay:0.4s}
+@keyframes typing{0%,60%,100%{opacity:0.3;transform:scale(1)}30%{opacity:1;transform:scale(1.2)}}
+@media(max-width:390px){.title{font-size:24px;letter-spacing:6px}.msg{max-width:95%}.msg-bubble{font-size:13px;padding:10px 14px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <h1 class="title">南山寺 · AI知客僧</h1>
+    <p class="title-sub">这是寂照世界的客堂，有疑问，随时问。</p>
+  </header>
+
+  <div class="chat-area" id="chatArea">
+    <!-- 欢迎消息 -->
+    <div class="msg bot">
+      <div class="msg-avatar">知</div>
+      <div class="msg-bubble">
+        阿弥陀佛。我是南山寺的AI知客僧，你可以问我关于寺院参访、法会活动、随喜功德、禅修报名等方面的问题。请随意提问。
+      </div>
+    </div>
+
+    <!-- 问答1 -->
+    <div class="msg user">
+      <div class="msg-avatar">信</div>
+      <div class="msg-bubble">禅修怎么报名？有什么条件吗？</div>
+    </div>
+    <div class="msg bot">
+      <div class="msg-avatar">知</div>
+      <div class="msg-bubble">
+        南山寺每月举办一次周末禅修营，通常在第二个周末（周六早8:00至周日下午4:00）。<br><br>
+        <strong>报名方式：</strong>关注本寺微信公众号「南山寺」，在菜单栏点击「禅修报名」填写在线表格即可。<br><br>
+        <strong>条件：</strong>身体健康、无严重身心疾病，能全程参与并遵守禅堂规约即可。无需任何禅修经验。<br><br>
+        报名后会有法师电话确认。如有特别需求（如单间、饮食禁忌），请在报名备注中说明。
+      </div>
+    </div>
+
+    <!-- 问答2 -->
+    <div class="msg user">
+      <div class="msg-avatar">信</div>
+      <div class="msg-bubble">随喜功德怎么做？可以线上捐款吗？</div>
+    </div>
+    <div class="msg bot">
+      <div class="msg-avatar">知</div>
+      <div class="msg-bubble">
+        感恩您的发心。目前南山寺支持以下随喜方式：<br><br>
+        <strong>① 线上随喜：</strong>关注微信公众号「南山寺」，点击「功德」→「线上随喜」，可选择供养三宝、供灯、供斋、助建寺院等项目，微信支付即可。<br><br>
+        <strong>② 现场随喜：</strong>可于每日 8:00–17:00 至寺院客堂办理，现金或扫码均可。<br><br>
+        <strong>③ 银行转账：</strong>户名「南山寺」，开户行及账号请在公众号菜单查询。<br><br>
+        所有功德款项每月在公众号公示账目，分文清晰，请您放心。
+      </div>
+    </div>
+
+    <!-- 问答3 -->
+    <div class="msg user">
+      <div class="msg-avatar">信</div>
+      <div class="msg-bubble">可以介绍一下南山寺的历史吗？</div>
+    </div>
+    <div class="msg bot">
+      <div class="msg-avatar">知</div>
+      <div class="msg-bubble">
+        南山寺始建于唐代贞观年间（公元638年），距今已有近一千四百年历史。相传玄奘法师西行前曾在此驻足讲经，寺内至今保存着一座唐代经幢，为国家一级文物。<br><br>
+        明末清初，寺院毁于兵燹，至光绪年间由本空禅师募资重建。上世纪六七十年代曾改作他用，1984年归还佛教界，经数代住持修缮扩建，方有今日规模。<br><br>
+        现寺院占地六十余亩，有大雄宝殿、藏经楼、禅堂、念佛堂等主要建筑。寺内古木参天，环境清幽，素有「城南第一丛林」之称。欢迎您来参访。
+      </div>
+    </div>
+  </div>
+
+  <!-- 预设快捷提问 -->
+  <div class="suggestions" id="suggestions">
+    <button data-q="禅修怎么报名？有什么条件吗？">禅修报名</button>
+    <button data-q="随喜功德怎么做？可以线上捐款吗？">随喜功德</button>
+    <button data-q="可以介绍一下南山寺的历史吗？">寺院历史</button>
+    <button data-q="来寺院参观需要注意什么？">参访礼仪</button>
+  </div>
+
+  <!-- 输入区 -->
+  <div class="input-area">
+    <input type="text" id="chatInput" placeholder="在这里输入您的问题…" autocomplete="off">
+    <button id="sendBtn">
+      <svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+    </button>
+  </div>
+
+  <a class="enter-chanting-btn" href="index.html">寂照世界</a>
+  <p class="footer-note">AI知客僧 · 如石数字科技出品 · 清净专业可信</p>
+</div>
+
+<script>
+(function(){
+  var chatArea = document.getElementById("chatArea");
+  var input = document.getElementById("chatInput");
+  var sendBtn = document.getElementById("sendBtn");
+  var suggestions = document.getElementById("suggestions");
+
+  var qaMap = {
+    "禅修怎么报名？有什么条件吗？": "南山寺每月举办一次周末禅修营，通常在第二个周末（周六早8:00至周日下午4:00）。<br><br><strong>报名方式：</strong>关注本寺微信公众号「南山寺」，在菜单栏点击「禅修报名」填写在线表格即可。<br><br><strong>条件：</strong>身体健康、无严重身心疾病，能全程参与并遵守禅堂规约即可。无需任何禅修经验。",
+    "随喜功德怎么做？可以线上捐款吗？": "感恩您的发心。目前南山寺支持以下随喜方式：<br><br><strong>① 线上随喜：</strong>关注微信公众号「南山寺」，点击「功德」→「线上随喜」，可选择供养三宝、供灯、供斋、助建寺院等项目。<br><br><strong>② 现场随喜：</strong>可于每日 8:00–17:00 至寺院客堂办理。<br><br><strong>③ 银行转账：</strong>户名「南山寺」，开户行及账号请在公众号菜单查询。",
+    "可以介绍一下南山寺的历史吗？": "南山寺始建于唐代贞观年间（公元638年），距今近一千四百年。相传玄奘法师西行前曾在此讲经。明末清初毁于兵燹，光绪年间由本空禅师重建。现占地六十余亩，有古建经幢等文物，素有「城南第一丛林」之称。",
+    "来寺院参观需要注意什么？": "欢迎来寺参访。以下几点供参考：<br><br><strong>衣着：</strong>请穿着朴素得体，避免短裤、吊带、高跟鞋。<br><br><strong>礼仪：</strong>进殿后请勿喧哗，手机调至静音。未经允许请勿拍摄佛像。<br><br><strong>时间：</strong>寺院每日 6:00–18:00 开放，法会期间时间或有调整。<br><br><strong>用餐：</strong>午斋时间 11:30–12:00，如需用斋请提前到客堂登记。"
+  };
+
+  function getAnswer(q) {
+    for (var key in qaMap) {
+      if (q.indexOf(key.replace(/[？?]/g, "").substring(0, 6)) !== -1) {
+        return qaMap[key];
+      }
+    }
+    return "抱歉，这个问题我暂时还无法回答。您可以尝试点击下方的快捷提问按钮，或联系寺院客堂咨询（电话：0912-8888888）。阿弥陀佛。";
+  }
+
+  function appendBotMsg(content) {
+    var div = document.createElement("div");
+    div.className = "msg bot";
+    div.innerHTML = '<div class="msg-avatar">知</div><div class="msg-bubble">' + content + '</div>';
+    chatArea.appendChild(div);
+    chatArea.scrollTop = chatArea.scrollHeight;
+  }
+
+  function appendUserMsg(text) {
+    var div = document.createElement("div");
+    div.className = "msg user";
+    div.innerHTML = '<div class="msg-avatar">信</div><div class="msg-bubble">' + escapeHtml(text) + '</div>';
+    chatArea.appendChild(div);
+    chatArea.scrollTop = chatArea.scrollHeight;
+  }
+
+  function escapeHtml(t) {
+    var d = document.createElement("div");
+    d.appendChild(document.createTextNode(t));
+    return d.innerHTML;
+  }
+
+  function simulateTyping(callback) {
+    var indicator = document.createElement("div");
+    indicator.className = "msg bot";
+    indicator.id = "typingIndicator";
+    indicator.innerHTML = '<div class="msg-avatar">知</div><div class="msg-bubble"><div class="typing-indicator"><span></span><span></span><span></span></div></div>';
+    chatArea.appendChild(indicator);
+    chatArea.scrollTop = chatArea.scrollHeight;
+    setTimeout(function() {
+      var el = document.getElementById("typingIndicator");
+      if (el) el.remove();
+      callback();
+    }, 600 + Math.random() * 800);
+  }
+
+  function handleSend(text) {
+    var q = (text || "").trim();
+    if (!q) return;
+    input.value = "";
+    appendUserMsg(q);
+    simulateTyping(function() {
+      appendBotMsg(getAnswer(q));
+    });
+  }
+
+  sendBtn.addEventListener("click", function() {
+    handleSend(input.value);
+  });
+
+  input.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSend(input.value);
+    }
+  });
+
+  suggestions.addEventListener("click", function(e) {
+    var btn = e.target.closest("button");
+    if (!btn) return;
+    var q = btn.getAttribute("data-q");
+    if (q) handleSend(q);
+  });
+
+})();
+</script>
+</body>
+</html>

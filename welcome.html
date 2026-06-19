@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<title>寂照世界 — 欢迎</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f2ebe1;--text-primary:#4a4238;--text-secondary:#8a7e72;--text-tertiary:#bcb2a6;--wood:#8B7D6B;--wood-hover:#9C8E7C;--wood-active:#7A6C5A;--divider:#ddd5cb;--card-bg:#f7f2ea;--max-w:520px}
+body{background:var(--bg);color:var(--text-primary);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans SC","PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;min-height:100dvh;display:flex;flex-direction:column;align-items:center;padding:64px 24px 48px;-webkit-tap-highlight-color:transparent}
+.container{width:100%;max-width:var(--max-w);display:flex;flex-direction:column;align-items:center}
+.header{text-align:center;margin-bottom:40px}
+.title{font-family:KaiTi,STKaiti,"楷体",serif;font-size:44px;font-weight:400;letter-spacing:14px;color:var(--text-primary);line-height:1.3;opacity:0;animation:fadeIn 1.2s ease forwards}
+.subtitle{font-size:14px;color:var(--text-secondary);letter-spacing:6px;margin-top:8px;opacity:0;animation:fadeIn 1.2s ease 0.3s forwards}
+.divider{width:40px;height:1px;background:var(--divider);margin:32px 0;opacity:0;animation:fadeIn 1s ease 0.5s forwards}
+.intro{font-size:15px;color:var(--text-secondary);text-align:center;line-height:1.9;letter-spacing:1px;padding:0 8px;margin-bottom:8px;opacity:0;animation:fadeIn 1s ease 0.6s forwards}
+.section-label{font-size:13px;color:var(--text-tertiary);letter-spacing:6px;text-align:center;margin-bottom:24px;position:relative;opacity:0;animation:fadeIn 1s ease 0.8s forwards}
+.section-label::before,.section-label::after{content:"";position:absolute;top:50%;width:36px;height:1px;background:var(--divider)}
+.section-label::before{right:calc(50% + 52px)}
+.section-label::after{left:calc(50% + 52px)}
+.cards{width:100%;display:flex;flex-direction:column;gap:20px;margin-bottom:40px}
+.card{background:var(--card-bg);border:1px solid var(--divider);border-radius:14px;padding:28px 24px 24px;opacity:0;animation:cardIn 0.7s ease forwards}
+.card:nth-child(1){animation-delay:0.9s}
+.card:nth-child(2){animation-delay:1.1s}
+.card:nth-child(3){animation-delay:1.3s}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.card-badge{font-size:11px;color:var(--text-tertiary);letter-spacing:2px;background:var(--bg);padding:4px 12px;border-radius:20px;border:1px solid var(--divider)}
+.card-journal{font-size:14px;color:var(--text-secondary);line-height:1.9;text-align:justify;margin-bottom:16px;padding:0 2px}
+.card-footer{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-top:14px;border-top:1px solid var(--divider)}
+.card-score{display:flex;flex-direction:column;align-items:flex-start}
+.card-score-label{font-size:11px;color:var(--text-tertiary);letter-spacing:2px}
+.card-score-value{font-size:28px;font-weight:300;color:var(--wood);font-family:"SF Mono","Fira Code","Cascadia Code","Courier New",monospace;line-height:1.1}
+.card-saying{font-size:14px;color:var(--text-primary);font-family:KaiTi,STKaiti,"楷体",serif;letter-spacing:1px;line-height:1.6;text-align:right;max-width:60%}
+.enter-btn{background:var(--wood);color:#fff;border:none;border-radius:30px;padding:16px 56px;font-size:20px;font-family:KaiTi,STKaiti,"楷体",serif;letter-spacing:6px;cursor:pointer;transition:background 0.3s ease,transform 0.15s ease,box-shadow 0.3s ease;box-shadow:0 4px 16px rgba(139,125,107,0.25);margin-bottom:28px;-webkit-tap-highlight-color:transparent;outline:none;opacity:0;animation:fadeIn 1s ease 0.8s forwards;text-decoration:none;display:inline-block}
+.enter-btn:active{transform:scale(0.96)}
+.enter-btn:hover{background:var(--wood-hover)}
+.footer-note{margin-top:32px;font-size:12px;color:var(--text-tertiary);text-align:center;letter-spacing:2px;opacity:0;animation:fadeIn 1s ease 2s forwards}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:390px){body{padding:40px 16px 32px}.title{font-size:34px;letter-spacing:10px}.card{padding:20px 16px 18px}.card-score-value{font-size:24px}.card-saying{max-width:55%}.enter-btn{padding:12px 36px;font-size:15px}}
+@media(min-width:600px){body{padding:80px 32px 56px}.title{font-size:52px;letter-spacing:18px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <h1 class="title">寂照世界</h1>
+    <p class="subtitle">寂而常照，照而常寂</p>
+  </header>
+  <div class="divider"></div>
+  <p class="intro">
+    这是一个免费、清净、没有广告的数字道场。<br>
+    你可以在这里禅坐、写日记、请 AI 禅师印证。<br><br>
+    无论你是初入禅门，还是久修老参，<br>
+    这里都有一席蒲团为你留着。<br>
+    不收费，不注册，不打扰。<br>
+    只有寂静，和你自己。
+  </p>
+  <div class="divider"></div>
+  <a class="enter-btn" href="index.html">进入禅堂</a>
+  <p class="section-label">禅修日记 · 三则</p>
+  <div class="cards">
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-badge">第一日 · 初坐</span>
+      </div>
+      <div class="card-journal">
+        今天第一次试着坐了二十分钟。前五分钟还行，后面腿开始疼，心里全是杂念——中午吃什么、昨天那条消息没回、下周的工作汇报还没准备。越想越烦，越烦越坐不住。中间睁了三次眼，偷偷看时间。到最后五分钟几乎是在熬。结束后腿麻得站不起来，但奇怪的是，虽然过程很挣扎，坐完那一瞬间心里竟然有一丝说不出的清亮。像一间堆满杂物的房间，刚打开门透进一口气。明天再试一次。
+      </div>
+      <div class="card-footer">
+        <div class="card-score">
+          <span class="card-score-label">觉照指数</span>
+          <span class="card-score-value">38</span>
+        </div>
+        <div class="card-saying">"不怕念起，只怕觉迟。"<br>—— 初坐能觉察到念头纷飞，本身已是觉照的开始。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-badge">第七日 · 微静</span>
+      </div>
+      <div class="card-journal">
+        坚持一周了。今天坐下来，呼吸变得比以前顺畅，不用刻意去数，自己就在那里，一进一出。中途有一小段——大概两三分钟——好像忘了身体的存在，没有想腿疼，没有想工作，甚至连"我在禅坐"这个念头都放下了。那几秒里什么都没有，但又很清醒。回过神来的时候，眼眶有点热。不知道为什么会想哭，不是难过，是另一种说不清的东西。结束后在日记里写了很久，手一直在动，好像有很多话想对自己说。
+      </div>
+      <div class="card-footer">
+        <div class="card-score">
+          <span class="card-score-label">觉照指数</span>
+          <span class="card-score-value">67</span>
+        </div>
+        <div class="card-saying">"不是风动，不是幡动，仁者心动。"<br>—— 那一瞬的清明，是你本来的样子在輕輕招手。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-badge">半月 · 观心</span>
+      </div>
+      <div class="card-journal">
+        今天工作上遇到一件让人很不舒服的事。回家的路上胸口堵得慌，脑子里反复 replay 那些对话，越想越气。上座前我跟自己说：今晚不求解脱，就看着这股气。前十分钟完全被情绪吞没，心跳很快，呼吸短促。我没对抗，就让它在那里，像看着一团乌云飘过。大概第十五分钟的时候，我发现那股气松了一点——不是想通了什么道理，就是身体层面的松。胸口不再那么紧了。下座后那股情绪还在，但我不再是"被它抓住"的状态了。理性和平静回来了。
+      </div>
+      <div class="card-footer">
+        <div class="card-score">
+          <span class="card-score-label">觉照指数</span>
+          <span class="card-score-value">81</span>
+        </div>
+        <div class="card-saying">"应无所住而生其心。"<br>—— 不拒乌云，不执晴空，烦恼即菩提。</div>
+      </div>
+    </div>
+
+  </div>
+  <p class="footer-note">寂照世界 · 清净无扰</p>
+</div>
+</body>
+</html>

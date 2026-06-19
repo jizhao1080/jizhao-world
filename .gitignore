@@ -1,0 +1,21 @@
+# 编译产物
+*.json
+*.abi
+*.bin
+*.bin-runtime
+
+# 开发环境
+node_modules/
+.env
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 测试覆盖率
+coverage/
+.nyc_output/
