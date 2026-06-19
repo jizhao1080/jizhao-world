@@ -44,17 +44,17 @@ contract JizhaoPoints {
     
     // ==================== 修饰器 ====================
     modifier onlyOwner() {
-        require(msg.sender == owner, "JZP: 仅所有者可执行");
+        require(msg.sender == owner, "JZP: Only owner can execute");
         _;
     }
     
     modifier onlyMinter() {
-        require(minters[msg.sender], "JZP: 非授权铸造者");
+        require(minters[msg.sender], "JZP: Not authorized minter");
         _;
     }
     
     modifier whenNotPaused() {
-        require(!paused, "JZP: 合约已暂停");
+        require(!paused, "JZP: Contract is paused");
         _;
     }
     
@@ -71,8 +71,8 @@ contract JizhaoPoints {
      * @dev 转账
      */
     function transfer(address to, uint256 amount) external whenNotPaused returns (bool) {
-        require(to != address(0), "JZP: 不能转入零地址");
-        require(balanceOf[msg.sender] >= amount, "JZP: 余额不足");
+        require(to != address(0), "JZP: Cannot transfer to zero address");
+        require(balanceOf[msg.sender] >= amount, "JZP: Insufficient balance");
         
         balanceOf[msg.sender] -= amount;
         balanceOf[to] += amount;
@@ -94,9 +94,9 @@ contract JizhaoPoints {
      * @dev 从授权账户转账
      */
     function transferFrom(address from, address to, uint256 amount) external whenNotPaused returns (bool) {
-        require(to != address(0), "JZP: 不能转入零地址");
-        require(balanceOf[from] >= amount, "JZP: 余额不足");
-        require(allowance[from][msg.sender] >= amount, "JZP: 授权额度不足");
+        require(to != address(0), "JZP: Cannot transfer to zero address");
+        require(balanceOf[from] >= amount, "JZP: Insufficient balance");
+        require(allowance[from][msg.sender] >= amount, "JZP: Insufficient allowance");
         
         balanceOf[from] -= amount;
         balanceOf[to] += amount;
@@ -114,15 +114,15 @@ contract JizhaoPoints {
      * @param minutes 禅修时长（分钟）
      */
     function mintByMinutes(address recipient, uint256 minutes) external onlyMinter whenNotPaused {
-        require(recipient != address(0), "JZP: 不能转入零地址");
-        require(minutes > 0, "JZP: 禅修时长必须大于0");
+        require(recipient != address(0), "JZP: Cannot transfer to zero address");
+        require(minutes > 0, "JZP: Minutes must be greater than 0");
         
         // 计算今日已获得的积分
         uint256 today = _getCurrentDay();
         uint256 alreadyMinted = dailyMinted[recipient][today];
         
         // 检查是否超过每日上限
-        require(alreadyMinted + minutes <= DAILY_LIMIT, "JZP: 超过每日100积分上限");
+        require(alreadyMinted + minutes <= DAILY_LIMIT, "JZP: Exceeds daily limit of 100 points");
         
         // 铸造积分
         uint256 amount = minutes; // 1分钟 = 1积分
@@ -138,13 +138,13 @@ contract JizhaoPoints {
      * @dev 直接铸造指定数量的积分
      */
     function mint(address recipient, uint256 amount) external onlyMinter whenNotPaused {
-        require(recipient != address(0), "JZP: 不能转入零地址");
-        require(amount > 0, "JZP: 铸造数量必须大于0");
+        require(recipient != address(0), "JZP: Cannot transfer to zero address");
+        require(amount > 0, "JZP: Amount must be greater than 0");
         
         // 检查每日上限
         uint256 today = _getCurrentDay();
         uint256 alreadyMinted = dailyMinted[recipient][today];
-        require(alreadyMinted + amount <= DAILY_LIMIT, "JZP: 超过每日100积分上限");
+        require(alreadyMinted + amount <= DAILY_LIMIT, "JZP: Exceeds daily limit of 100 points");
         
         balanceOf[recipient] += amount;
         totalSupply += amount;
@@ -160,8 +160,8 @@ contract JizhaoPoints {
      * @dev 添加铸造者
      */
     function addMinter(address minter) external onlyOwner {
-        require(minter != address(0), "JZP: 无效地址");
-        require(!minters[minter], "JZP: 已是铸造者");
+        require(minter != address(0), "JZP: Invalid address");
+        require(!minters[minter], "JZP: Already a minter");
         
         minters[minter] = true;
         emit MinterAdded(minter);
@@ -171,7 +171,7 @@ contract JizhaoPoints {
      * @dev 移除铸造者
      */
     function removeMinter(address minter) external onlyOwner {
-        require(minters[minter], "JZP: 不是铸造者");
+        require(minters[minter], "JZP: Not a minter");
         
         minters[minter] = false;
         emit MinterRemoved(minter);
@@ -189,7 +189,7 @@ contract JizhaoPoints {
      * @dev 转移所有权
      */
     function transferOwnership(address newOwner) external onlyOwner {
-        require(newOwner != address(0), "JZP: 无效地址");
+        require(newOwner != address(0), "JZP: Invalid address");
         owner = newOwner;
     }
     
