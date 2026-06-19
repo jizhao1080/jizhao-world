@@ -10,7 +10,7 @@ pragma solidity ^0.8.20;
  */
 contract JizhaoPoints {
     // ==================== 基础信息 ====================
-    string public constant name = "寂照积分";
+    string public constant name = "\u5bc2\u7167\u79ef\u5206"; // 寂照积分
     string public constant symbol = "JZP";
     uint8 public constant decimals = 0; // 积分为整数，无小数位
     uint256 public totalSupply;
